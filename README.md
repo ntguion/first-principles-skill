@@ -92,7 +92,7 @@ The skill will guide you through:
 
 ## Philosophy
 
-As described in Chase Hughes' "[Beyond the Replica: The Case for First-Principles Agents](https://chasewughes.com)":
+As described in Chase Hughes' "[Beyond the Replica: The Case for First-Principles Agents](https://www.chasewhughes.com/writing/beyond-the-replica-the-case-for-first-principles-agents)":
 
 > "If we limit agents to only doing what humans do—exactly how humans do it—we trap them in a local optimum. To unlock the true promise of the 'Agent OS' era, we need to be willing to ask: When should we automate the worker, and when should we solve the problem?"
 
@@ -108,6 +108,6 @@ MIT License - see LICENSE file for details
 
 ## Acknowledgments
 
-- Inspired by [Chase Hughes' "Beyond the Replica"](https://chasewughes.com) article on first principles agents
+- Inspired by [Chase Hughes' "Beyond the Replica"](https://www.chasewhughes.com/writing/beyond-the-replica-the-case-for-first-principles-agents) article on first principles agents
 - Methodology drawn from physics-based reasoning and innovative problem-solving approaches
 - Examples drawn from SpaceX, Amazon, Facebook AI Research, and other real-world applications
