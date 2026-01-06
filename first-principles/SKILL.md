@@ -68,7 +68,7 @@ Ask questions like:
 
 ## Illustrative Examples
 
-**SpaceX Rockets** (Elon Musk)
+**SpaceX Rockets**
 - Conventional: "Rockets cost $65M because that's the market price"
 - First principles: "What is a rocket made of? Aluminum, titanium, copper, carbon fiber. What do those materials cost? About 2% of the rocket price."
 - Result: Built rockets at 10x lower cost
