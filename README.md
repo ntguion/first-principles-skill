@@ -4,7 +4,7 @@ A Claude Code skill that enables first principles thinking for complex problem-s
 
 ## Overview
 
-This skill teaches Claude to apply first principles thinking—a methodology popularized by physicists and innovators like Elon Musk. Instead of copying what others do with slight variations (reasoning by analogy), first principles thinking means:
+This skill teaches Claude to apply first principles thinking—a methodology popularized by physicists and innovators. Instead of copying what others do with slight variations (reasoning by analogy), first principles thinking means:
 
 1. **Question all assumptions** - Challenge every belief, "best practice," and inherited convention
 2. **Deconstruct to fundamental truths** - Find the immutable constraints (physics, math, core requirements)
@@ -109,5 +109,5 @@ MIT License - see LICENSE file for details
 ## Acknowledgments
 
 - Inspired by [Chase Hughes' "Beyond the Replica"](https://chasewughes.com) article on first principles agents
-- Methodology based on Elon Musk's approach to problem-solving
+- Methodology drawn from physics-based reasoning and innovative problem-solving approaches
 - Examples drawn from SpaceX, Amazon, Facebook AI Research, and other real-world applications
