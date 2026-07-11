@@ -1,113 +1,106 @@
 # First Principles Thinking Skill
 
-A Claude Code skill that enables first principles thinking for complex problem-solving. Break down problems to fundamental truths and rebuild solutions from the ground up, rather than reasoning by analogy.
+An Agent Skill for analyzing complex problems by separating objectives, evidence, constraints, and inherited conventions before comparing possible solutions.
 
-## Overview
+The skill is designed for Claude Code and follows the portable [Agent Skills](https://agentskills.io/) directory format.
 
-This skill teaches Claude to apply first principles thinking—a methodology popularized by physicists and innovators. Instead of copying what others do with slight variations (reasoning by analogy), first principles thinking means:
+## What It Does
 
-1. **Question all assumptions** - Challenge every belief, "best practice," and inherited convention
-2. **Deconstruct to fundamental truths** - Find the immutable constraints (physics, math, core requirements)
-3. **Rebuild from scratch** - Design solutions based only on fundamental truths, not traditions
+The skill guides an analysis through a repeatable sequence:
 
-## When to Use
+1. Define the actual objective and success criteria.
+2. Separate known facts from estimates and assumptions.
+3. Classify hard constraints, governance constraints, and inherited conventions.
+4. Generate a conventional baseline and at least one alternative derived from the stated constraints.
+5. Compare tradeoffs, failure modes, reversibility, and evidence quality.
+6. Recommend the smallest useful test or next step.
 
-The skill automatically triggers for:
+It is most useful for novel problems, architecture decisions, workflow redesign, and situations where a familiar pattern may be hiding a better option.
 
-- **Complex/novel problems** where traditional approaches may be limiting
-- **System design & architecture** decisions
-- **Process optimization** and automation strategy
-- **Workflow efficiency** challenges
-- Situations requiring **"alien solutions"** - approaches that seem strange but are mathematically superior
+## What It Does Not Do
 
-You can also explicitly invoke it: `/first-principles [your problem]`
-
-## Key Concepts
-
-### Two Design Lanes
-
-The skill helps you distinguish between two valid approaches:
-
-**Biomimicry (Human-Centric)**
-- Replicate how humans do it: linear processing, visual interfaces, familiar patterns
-- Use when humans need to audit the process or legacy systems require UI interaction
-
-**First Principles (Objective-Centric)**
-- Solve for the objective function directly, ignoring human constraints
-- Use when pure outcome efficiency matters and systems can communicate natively
-
-### Real-World Examples
-
-The skill references proven examples of first principles thinking:
-
-- **SpaceX Rockets**: Questioned why rockets cost $65M, analyzed material costs (2% of price), built at 10x lower cost
-- **Amazon Fulfillment**: Abandoned categorical organization for "chaos storage" - random placement optimized for travel paths
-- **AI Communication**: Facebook's agents developed shorthand tokens instead of grammatical English for bandwidth efficiency
+First-principles reasoning does not make safety, law, ethics, privacy, accessibility, user intent, or human impact optional. Those are real design constraints. It also cannot replace missing domain evidence or decide value judgments on the user's behalf.
 
 ## Installation
 
-### Option 1: Install .skill file
+Claude Code discovers skills from directories containing a `SKILL.md` file.
 
-Download `first-principles.skill` and install via Claude Code:
+### Personal Skill
 
-```bash
-claude skills install first-principles.skill
-```
-
-### Option 2: Install from source
-
-Clone this repository and package the skill:
+Install the skill for use across projects:
 
 ```bash
 git clone https://github.com/ntguion/first-principles-skill.git
-cd first-principles-skill/first-principles
-# Package and install through Claude Code
+mkdir -p ~/.claude/skills/first-principles
+cp first-principles-skill/first-principles/SKILL.md \
+  ~/.claude/skills/first-principles/SKILL.md
 ```
+
+### Project Skill
+
+Copy the skill into a repository when it should be shared with that project:
+
+```bash
+mkdir -p .claude/skills/first-principles
+cp /path/to/first-principles-skill/first-principles/SKILL.md \
+  .claude/skills/first-principles/SKILL.md
+```
+
+Claude Code detects skills in these locations. If a new top-level skills directory is not detected in an existing session, restart that session.
 
 ## Usage
 
-Once installed, the skill will automatically activate when you're working on complex problems. You can also explicitly invoke it:
+Invoke the skill directly:
 
+```text
+/first-principles Design a caching strategy for API responses with strict freshness requirements.
 ```
-/first-principles Design a caching system for API responses
+
+Claude Code may also load it when a request matches the activation description in the skill frontmatter.
+
+The response should identify:
+
+- the objective and success measures;
+- known constraints and evidence;
+- assumptions worth testing;
+- candidate approaches and tradeoffs;
+- a recommendation;
+- the smallest useful experiment;
+- remaining risks and unknowns.
+
+## Example
+
+For a notification system, the analysis might question whether every event needs immediate push delivery while preserving non-negotiable requirements such as consent, accessibility, delivery reliability, and user control. It could then compare a conventional push-first design with a tiered design that uses different channels for critical, timely, and ambient events.
+
+The point is not to choose the unusual design automatically. The point is to expose assumptions and compare options against explicit objectives and constraints.
+
+## Validation
+
+Run a basic frontmatter and path check from the repository root:
+
+```bash
+ruby -ryaml -e 'text = File.read("first-principles/SKILL.md"); data = YAML.safe_load(text.split(/^---\s*$\n/, 3)[1]); abort unless data["name"] == "first-principles" && data["description"].is_a?(String)'
 ```
 
-The skill will guide you through:
-1. Identifying the real objective
-2. Listing all assumptions about how it "must" be done
-3. Finding fundamental constraints (physics, math, requirements)
-4. Considering "alien solutions" that ignore human conventions
-5. Choosing between biomimicry and first principles approaches
-6. Reasoning up from fundamental truths
+The repository intentionally keeps `first-principles/SKILL.md` as the single distributable source instead of maintaining a duplicate packaged archive.
 
-## Example Session
+## Limitations
 
-**User**: "I need to build a notification system. The standard approach is Firebase Cloud Messaging with a bell icon and badge count."
+- Results depend on the accuracy and completeness of the stated facts and constraints.
+- A novel alternative is not necessarily better than a proven pattern.
+- Quantitative claims still need data, benchmarks, or experiments.
+- High-impact decisions need domain review and proportionate human oversight.
+- Some conventions encode lessons that are easy to lose when rebuilding from scratch.
 
-**Claude (with skill)**:
-- Questions assumptions: Must notifications be push? Must we show all history? Is badge count optimal?
-- Identifies fundamentals: Core objective is "inform users of important state changes" with limited attention
-- Proposes first principles solution: Tiered delivery (SMS for critical, push for timely, in-app for ambient), event stream architecture, adaptive interruption based on user behavior
-- Distinguishes: Use biomimicry for UI (bell icon), first principles for architecture (event stream)
+## Sources And Inspiration
 
-## Philosophy
-
-As described in Chase Hughes' "[Beyond the Replica: The Case for First-Principles Agents](https://www.chasewhughes.com/writing/beyond-the-replica-the-case-for-first-principles-agents)":
-
-> "If we limit agents to only doing what humans do—exactly how humans do it—we trap them in a local optimum. To unlock the true promise of the 'Agent OS' era, we need to be willing to ask: When should we automate the worker, and when should we solve the problem?"
-
-This skill embodies that philosophy—helping you identify when to think like a human and when to think like an alien intelligence optimizing purely for the objective function.
+- Chase Hughes, [Beyond the Replica: The Case for First-Principles Agents](https://www.chasewhughes.com/writing/beyond-the-replica-the-case-for-first-principles-agents)
+- Lewis et al., [Deal or No Deal? End-to-End Learning for Negotiation Dialogues](https://arxiv.org/abs/1706.05125), used here as a caution that optimizing a measurable goal can degrade an unmodeled requirement such as human-readable communication
 
 ## Contributing
 
-Issues and pull requests welcome! If you discover improvements to the skill's methodology or find it triggers in situations where it shouldn't (or vice versa), please open an issue.
+Issues and pull requests are welcome, especially for clearer activation criteria, stronger evaluation methods, and examples with well-supported tradeoffs.
 
 ## License
 
-MIT License - see LICENSE file for details
-
-## Acknowledgments
-
-- Inspired by [Chase Hughes' "Beyond the Replica"](https://www.chasewhughes.com/writing/beyond-the-replica-the-case-for-first-principles-agents) article on first principles agents
-- Methodology drawn from physics-based reasoning and innovative problem-solving approaches
-- Examples drawn from SpaceX, Amazon, Facebook AI Research, and other real-world applications
+MIT License. See [LICENSE](LICENSE).

@@ -1,104 +1,115 @@
 ---
 name: first-principles
-description: Apply first principles thinking to complex problems by breaking them down to fundamental truths and reasoning up from there. Use when tackling novel problems, designing systems, optimizing workflows, questioning assumptions, or when traditional approaches may be limiting. Particularly valuable for architecture decisions, automation strategy, and situations where the user requests 'first principles', 'fundamental approach', or 'alien solutions'. Works across all domains - technical, process, business, and creative problems.
+description: Analyze complex or novel problems from first principles by separating objectives, evidence, hard constraints, and inherited conventions before generating and comparing solutions. Use when the user explicitly asks for first-principles reasoning, challenges assumptions, or needs architecture or process tradeoff analysis where standard patterns may obscure alternatives.
 ---
 
 # First Principles Thinking
 
-Apply first principles thinking to decompose problems into fundamental truths and build solutions from the ground up, rather than reasoning by analogy.
+Analyze the problem from its underlying objectives and constraints rather than copying a familiar solution by default.
 
-## Core Methodology
+## Boundaries
 
-**First principles thinking** means boiling problems down to their most fundamental, indisputable truths—then reasoning up from there. It contrasts with **reasoning by analogy**, where solutions copy what others do with slight variations.
+- Treat user intent, safety, law, ethics, privacy, security, accessibility, and human impact as real constraints. Do not dismiss them as conventions for the sake of optimization.
+- Distinguish facts, estimates, assumptions, preferences, and unknowns. Do not invent evidence or present uncertain claims as fundamental truths.
+- Account for multiple objectives and failure modes. A single measurable target may omit important consequences.
+- Prefer reversible tests before high-cost or high-impact changes.
+- Preserve appropriate human review for consequential decisions.
 
-### The Three-Step Process
+First-principles reasoning is a method for exposing assumptions. It is not permission to ignore people, governance, or domain expertise.
 
-1. **Question All Assumptions**
-   - List every assumption, belief, and "best practice" about the problem
-   - Challenge each one: "What if this isn't true?" or "Why do we believe this?"
-   - Identify which are actually fundamental constraints vs inherited conventions
+## Method
 
-2. **Deconstruct to Fundamental Truths**
-   - Break the problem down to its most basic, indivisible elements
-   - Ask: "What are we absolutely sure is true?"
-   - Focus on physical constraints, mathematical truths, or core requirements
-   - Seek the "physics of the problem" - the immutable realities
+### 1. Define the Objective
 
-3. **Rebuild from the Ground Up**
-   - Use only the fundamental truths as your foundation
-   - Design solutions without inheriting human workflows or historical approaches
-   - Consider "alien solutions" - approaches that seem strange but are mathematically superior
-   - Optimize for the objective function, not for familiarity
+- State the outcome the user is trying to achieve.
+- Separate the outcome from the proposed implementation.
+- Identify success measures and acceptable failure thresholds where possible.
+- Surface competing objectives instead of forcing them into one metric.
 
-## Key Principles
+### 2. Inventory the Constraints
 
-### Distinguish Between Two Design Lanes
+Classify each relevant statement:
 
-When solving problems, recognize two valid approaches:
+- **Observed fact:** Supported by direct evidence.
+- **Hard constraint:** A physical, mathematical, technical, or resource limit.
+- **Governance constraint:** A legal, safety, ethical, privacy, security, policy, accessibility, or accountability requirement.
+- **Preference:** A user or stakeholder choice that should be preserved or explicitly negotiated.
+- **Convention:** A familiar pattern that may be changed.
+- **Assumption or unknown:** A claim that needs evidence or testing.
 
-**Biomimicry (Human-Centric)**
-- Replicate how humans do it: linear processing, visual interfaces, familiar patterns
-- Use when: Humans need to audit the process, legacy systems require UI interaction, user trust requires transparency
-- Example: An agent that opens a browser, searches LinkedIn, and copies to CRM
+Ask what evidence supports each item and how costly it would be to test.
 
-**First Principles (Objective-Centric)**
-- Solve for the objective function directly, ignoring human constraints
-- Use when: Pure outcome efficiency matters, systems can communicate natively, parallel processing is possible
-- Example: An agent that spawns 1000 parallel threads, queries APIs directly, processes data via vector operations
+### 3. Establish a Baseline
 
-Both approaches are valid - choose based on the problem's constraints and goals.
+Describe the conventional or current approach fairly. Note what it does well, what it protects against, and where it fails. Do not treat novelty as evidence of quality.
 
-### Question the "How Humans Do It"
+### 4. Generate Alternatives
 
-Human workflows often encode biological limitations that don't apply to computational systems:
+Develop options from the objective and validated constraints:
 
-- **Categorical organization** → May not be optimal (see: Amazon's "chaos storage")
-- **Serial processing** → Parallel is often possible and faster
-- **Visual interfaces** → Direct API access may be more efficient
-- **Natural language** → Structured data exchange may be superior
-- **Step-by-step SOPs** → Might be decomposable into concurrent operations
+- Improve the conventional baseline.
+- Remove or replace assumptions that are not required.
+- Change the interface, sequence, level of automation, or system boundary.
+- Consider direct system integration when it is safer and more reliable than reproducing a manual interface.
+- Keep human-readable controls when review, trust, accessibility, or recovery requires them.
 
-### Focus on Physics, Not Convention
+Generate only enough alternatives to expose meaningful tradeoffs.
 
-Ask questions like:
-- "What are the actual physical/mathematical constraints?"
-- "What is the objective function we're optimizing?"
-- "What would this look like if we designed it from scratch today?"
-- "What information actually needs to flow, ignoring how it currently flows?"
+### 5. Compare Tradeoffs
 
-## Illustrative Examples
+Evaluate each viable option against:
 
-**SpaceX Rockets**
-- Conventional: "Rockets cost $65M because that's the market price"
-- First principles: "What is a rocket made of? Aluminum, titanium, copper, carbon fiber. What do those materials cost? About 2% of the rocket price."
-- Result: Built rockets at 10x lower cost
+- expected benefit;
+- evidence quality;
+- cost and time;
+- safety, security, privacy, and compliance risk;
+- usability and accessibility;
+- reversibility and recovery;
+- operational complexity;
+- failure modes and blast radius.
 
-**Amazon Fulfillment** (Chaos Storage)
-- Conventional: Organize warehouse by category (shirts with shirts) for human retrievability
-- First principles: Optimize for travel paths and congestion, place items randomly, let algorithms remember locations
-- Result: Faster fulfillment despite appearing chaotic to humans
+Use quantitative estimates only when their basis is available. Label estimates and sensitivity ranges clearly.
 
-**Agent Communication** (Facebook AI)
-- Conventional: Agents should speak grammatical English
-- First principles: Agents optimized for information bandwidth, developed shorthand tokens
-- Result: More efficient communication, though alien-looking to humans
+### 6. Recommend And Test
 
-## Application to Current Task
+- Recommend an option and explain why it best fits the stated constraints.
+- Name the strongest argument against it.
+- Propose the smallest experiment that could disprove the key assumption.
+- Define what evidence would change the recommendation.
+- List unresolved risks and the review needed before a consequential rollout.
 
-When applying first principles to the user's problem:
+## Design Lanes
 
-1. **Identify the real objective** - What outcome are we actually trying to achieve?
+Two broad design lanes are often useful:
 
-2. **List all assumptions** - What are we assuming about how this must be done?
+### Interface-Compatible
 
-3. **Find the fundamentals** - What are the immutable constraints (physics, math, core requirements)?
+Preserve familiar workflows or interfaces when people need to understand, audit, approve, or recover the process, or when a legacy system exposes no safer integration.
 
-4. **Consider alien solutions** - What would an optimal solution look like if we ignored human conventions?
+### Objective-Oriented
 
-5. **Choose the appropriate lane**:
-   - If humans need to audit/understand: Use biomimicry but with optimizations
-   - If pure efficiency matters: Design from first principles
+Redesign the workflow around the desired outcome when systems can exchange structured data directly and the approach remains secure, observable, governable, and recoverable.
 
-6. **Reason up from scratch** - Build the solution based only on fundamental truths
+These lanes can be combined. For example, a system may use direct APIs internally while retaining a clear human approval and audit interface.
 
-Remember: The goal isn't to be different for the sake of being different. It's to avoid being trapped by conventions that don't serve the objective function. Sometimes the human way is optimal; sometimes there's a Move 37 waiting to be discovered.
+## Output Shape
+
+For a substantial problem, organize the response as:
+
+1. **Objective and success measures**
+2. **Known facts and evidence**
+3. **Constraints**
+4. **Assumptions to test**
+5. **Candidate approaches**
+6. **Tradeoff comparison**
+7. **Recommendation**
+8. **Smallest useful experiment**
+9. **Risks, unknowns, and review needs**
+
+Keep the structure proportional. A narrow question may need only a few concise paragraphs.
+
+## Cautionary Example
+
+In the 2017 FAIR negotiation study, goal-oriented training improved negotiation performance but also caused divergence from human-like language. The researchers mixed reinforcement learning with supervised updates to preserve human-readable communication. The lesson is not that human conventions should always win; it is that an objective can omit important requirements unless they are represented as constraints and evaluated explicitly.
+
+Remember: rebuilding from fundamentals can confirm the standard approach. The goal is a better-supported decision, not a more unusual one.
